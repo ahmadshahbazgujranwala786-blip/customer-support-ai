@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0c1220">
+  <meta name="description" content="A modern AI customer support workspace powered by a multi-agent support assistant.">
+  <title>Customer Support Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M20 4.5 24.5 15.5 35.5 20 24.5 24.5 20 35.5 15.5 24.5 4.5 20 15.5 15.5 20 4.5Z" fill="currentColor"/><circle cx="20" cy="20" r="4.2" fill="#0C1220"/></svg>
+        </div>
+        <div class="brand-copy"><span>Customer Support</span><small>SUPPORT ASSISTANT</small></div>
+        <button class="icon-button sidebar-close" id="closeSidebar" aria-label="Close menu" title="Close menu"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </div>
+
+      <button class="new-chat-button" id="newChatButton">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        <span>New conversation</span>
+        <span class="shortcut">Ctrl K</span>
+      </button>
+
+      <div class="sidebar-section">
+        <div class="section-heading"><span>WORKSPACE</span></div>
+        <button class="nav-item active" type="button" data-nav="inbox">
+          <svg viewBox="0 0 24 24"><path d="M4 5.5h16v13H4z"/><path d="M4 13h4l1.6 2h4.8l1.6-2h4"/></svg>
+          <span>Support chat</span><span class="nav-dot"></span>
+        </button>
+      </div>
+
+      <div class="sidebar-section conversation-section">
+        <div class="section-heading"><span>RECENT CONVERSATIONS</span><button class="tiny-icon-button" id="clearHistoryButton" aria-label="Clear local history" title="Clear local history"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3m-9 0 1 13h10l1-13M10 10v6m4-6v6"/></svg></button></div>
+        <div class="conversation-list" id="conversationList">
+          <div class="empty-history"><span class="history-icon">◷</span><span>Your conversations will appear here.</span></div>
+        </div>
+      </div>
+
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-bottom">
+        <div class="usage-card">
+          <div class="usage-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 7v5c0 4.6 3.2 7.8 7.5 9 4.3-1.2 7.5-4.4 7.5-9V7L12 3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <div class="usage-copy"><strong>Conversation history</strong><span>Saved in this browser</span></div>
+          <span class="privacy-dot"></span>
+        </div>
+        <button class="profile-row" id="settingsButton" type="button">
+          <div class="profile-avatar">CS</div>
+          <div class="profile-copy"><strong>Support assistant</strong><span>Website chat</span></div>
+          <svg class="profile-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.8 1.8 0 0 0-3 .9v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.8 1.8 0 0 0-3-.9l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.8 1.8 0 0 0-.9-3H4a1.7 1.7 0 0 1 0-3.4h.2a1.8 1.8 0 0 0 .9-3l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.8 1.8 0 0 0 3-.9V2a1.7 1.7 0 0 1 3.4 0v.2a1.8 1.8 0 0 0 3 .9l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.8 1.8 0 0 0 .9 3h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.8 1.8 0 0 0-.8 3.1Z" transform="translate(2 2) scale(.83)"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <div class="mobile-scrim" id="mobileScrim"></div>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-button menu-toggle" id="openSidebar" aria-label="Open menu" title="Open menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+          <div class="breadcrumb"><span>Workspace</span><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg><strong>Support chat</strong></div>
+        </div>
+        <div class="topbar-actions">
+          <button class="connection-pill" id="connectionPill" type="button" title="Configure backend connection">
+            <span class="connection-indicator" id="connectionDot"></span><span id="connectionLabel">Checking backend</span><svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <span class="topbar-divider"></span>
+          <button class="icon-button" id="themeButton" aria-label="Toggle light and dark theme" title="Toggle theme"><svg viewBox="0 0 24 24"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.5 8.5 0 1 0 12 12Z"/></svg></button>
+          <button class="help-button" id="helpButton" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.4 2.4 0 1 1 4.2 1.6c-1.1 1-1.9 1.3-1.9 2.9M12 17h.01"/></svg><span>Help</span></button>
+        </div>
+      </header>
+
+      <section class="chat-workspace" aria-label="Customer support chat">
+        <div class="chat-canvas" id="chatCanvas">
+          <div class="welcome-state" id="welcomeState">
+            <div class="welcome-eyebrow"><span class="sparkle-mini">✳</span> YOUR AI SUPPORT ASSISTANT</div>
+            <div class="welcome-orb"><div class="orb-ring orb-ring-one"></div><div class="orb-ring orb-ring-two"></div><div class="orb-core"><svg viewBox="0 0 48 48"><path d="M24 5 29.3 18.7 43 24l-13.7 5.3L24 43l-5.3-13.7L5 24l13.7-5.3L24 5Z" fill="currentColor"/><circle cx="24" cy="24" r="4.4" fill="#eef8ff"/></svg></div><span class="orb-particle particle-one"></span><span class="orb-particle particle-two"></span><span class="orb-particle particle-three"></span></div>
+            <h1>How can we <span>help you today?</span></h1>
+            <p class="welcome-copy">Ask a question about orders, products, services, or company policies. I'll help you find the right answer.</p>
+            <div class="suggestion-grid" id="suggestionGrid">
+              <button class="suggestion-card" type="button" data-prompt="I'd like to check the status of an order.">
+                <span class="suggestion-icon icon-violet"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span><span class="suggestion-text"><strong>Track an order</strong><small>Check an order or delivery</small></span><svg class="suggestion-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </button>
+              <button class="suggestion-card" type="button" data-prompt="Can you help me find a product?">
+                <span class="suggestion-icon icon-blue"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg></span><span class="suggestion-text"><strong>Find a product</strong><small>Explore products and services</small></span><svg class="suggestion-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </button>
+              <button class="suggestion-card" type="button" data-prompt="Can you explain your return or refund policy?">
+                <span class="suggestion-icon icon-amber"><svg viewBox="0 0 24 24"><path d="M4 7h13a3 3 0 0 1 0 6H8"/><path d="m11 9-3 4 3 4"/><path d="M20 7v10"/></svg></span><span class="suggestion-text"><strong>Returns & policies</strong><small>Get answers to common questions</small></span><svg class="suggestion-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </button>
+              <button class="suggestion-card" type="button" data-prompt="I'd like to update my customer details.">
+                <span class="suggestion-icon icon-green"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></span><span class="suggestion-text"><strong>Account details</strong><small>Manage your customer information</small></span><svg class="suggestion-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </button>
+            </div>
+            <div class="welcome-footer"><span class="tiny-shield"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 7v5c0 4.6 3.2 7.8 7.5 9 4.3-1.2 7.5-4.4 7.5-9V7L12 3Z"/></svg></span> AI-generated responses may need verification for important decisions.</div>
+          </div>
+          <div class="message-list" id="messageList" aria-live="polite" hidden></div>
+          <div class="scroll-anchor" id="scrollAnchor"></div>
+        </div>
+
+        <div class="composer-wrap">
+          <div class="composer" id="composer">
+            <textarea id="messageInput" rows="1" maxlength="4000" placeholder="Message your support assistant..." aria-label="Your message"></textarea>
+            <div class="composer-bottom">
+              <div class="composer-tools"><span class="composer-hint"><kbd>Enter</kbd> to send <span class="hint-separator">·</span> <kbd>Shift + Enter</kbd> for new line</span></div>
+              <div class="composer-send-area"><span class="char-count" id="charCount">0 / 4000</span><button class="send-button" id="sendButton" type="button" aria-label="Send message" title="Send message" disabled><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></div>
+            </div>
+          </div>
+          <div class="composer-disclaimer">AI support assistant <span>•</span> <button type="button" id="apiConfigInline">Connection settings</button></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+
+  <dialog class="modal" id="settingsDialog">
+    <form method="dialog" class="modal-form" id="settingsForm">
+      <div class="modal-heading"><div class="modal-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.8 1.8 0 0 0-3 .9v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.8 1.8 0 0 0-3-.9l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.8 1.8 0 0 0-.9-3H4a1.7 1.7 0 0 1 0-3.4h.2a1.8 1.8 0 0 0 .9-3l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.8 1.8 0 0 0 3-.9V2a1.7 1.7 0 0 1 3.4 0v.2a1.8 1.8 0 0 0 3 .9l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.8 1.8 0 0 0 .9 3h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.8 1.8 0 0 0-.8 3.1Z" transform="translate(2 2) scale(.83)"/></svg></div><button type="button" class="modal-close icon-button" id="closeSettings" aria-label="Close settings"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <h2>Backend connection</h2>
+      <p class="modal-intro">Connect this website to your Python customer-support backend. The URL should point to an API endpoint that accepts a chat message and returns a response.</p>
+      <label for="apiEndpoint">Chat API endpoint</label>
+      <input id="apiEndpoint" class="text-input" type="url" placeholder="http://127.0.0.1:8000/api/chat" autocomplete="url">
+      <div class="endpoint-help">Expected request: <code>POST</code> with <code>message</code>, <code>user_id</code>, <code>channel</code> and <code>sender_name</code>.</div>
+      <div class="connection-detail" id="connectionDetail"><span class="connection-indicator"></span><span>Connection status hasn't been checked yet.</span></div>
+      <div class="modal-actions"><button type="button" class="button-secondary" id="testConnectionButton">Test connection</button><button type="button" class="button-primary" id="saveEndpointButton">Save settings</button></div>
+      <p class="modal-note">For a deployed site, use HTTPS and keep provider API keys on the server—not in this website.</p>
+    </form>
+  </dialog>
+
+  <dialog class="modal small-modal" id="helpDialog">
+    <form method="dialog" class="modal-form">
+      <div class="modal-heading"><div class="modal-icon help-modal-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.4 2.4 0 1 1 4.2 1.6c-1.1 1-1.9 1.3-1.9 2.9M12 17h.01"/></svg></div><button class="modal-close icon-button" aria-label="Close help"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <h2>Using Support Assistant</h2>
+      <p class="modal-intro">Ask about orders, products, services, customer details or business policies. The backend routes requests to specialized support agents.</p>
+      <div class="help-list"><div><span class="help-bullet">01</span><span><strong>Ask naturally</strong><small>Describe what you need in one message.</small></span></div><div><span class="help-bullet">02</span><span><strong>Give relevant context</strong><small>Include an order number or product name when appropriate. Avoid sensitive payment details.</small></span></div><div><span class="help-bullet">03</span><span><strong>Verify important actions</strong><small>Never share passwords or full payment-card details. Verify important account or order actions.</small></span></div></div>
+      <div class="modal-actions single-action"><button class="button-primary">Got it</button></div>
+    </form>
+  </dialog>
+
+  <script src="./app.js"></script>
+</body>
+</html>

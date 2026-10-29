@@ -1,0 +1,48 @@
+﻿# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local databases, vector stores, and generated customer data
+chroma/
+chroma_db/
+**/chroma/
+**/chroma_db/
+*.db
+*.sqlite
+*.sqlite3
+*.parquet
+
+# Logs and runtime output
+*.log
+logs/
+
+# Backups and archives
+backups/
+*.bak
+*.backup
+*.zip
+*.7z
+
+# Frontend dependencies/build outputs
+node_modules/
+dist/
+build/
+.next/
+coverage/
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
